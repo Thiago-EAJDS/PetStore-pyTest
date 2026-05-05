@@ -1,4 +1,3 @@
-import pytest
 from models.pet_model import pet_payload
 
 class TestPet:
