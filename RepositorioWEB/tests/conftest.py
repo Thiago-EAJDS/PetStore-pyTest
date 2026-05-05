@@ -12,6 +12,13 @@ def driver():
     options = webdriver.ChromeOptions()
     options.add_argument("--start-maximized")
     options.add_argument("--disable-notifications")
+    options.add_argument("--disable-save-password-bubble")
+    options.add_argument("--disable-features=PasswordCheck,SafeBrowsingEnhancedProtection")
+    options.add_experimental_option("prefs", {
+        "credentials_enable_service": False,
+        "profile.password_manager_enabled": False,
+        "profile.password_manager_leak_detection": False
+    })
     driver = webdriver.Chrome(
         service=Service(ChromeDriverManager().install()),
         options=options
