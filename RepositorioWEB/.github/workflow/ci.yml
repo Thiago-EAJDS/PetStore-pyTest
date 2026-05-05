@@ -1,0 +1,29 @@
+web-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependências
+        run: pip install -r RepositorioWeb/requirements.txt
+
+      - name: Instalar Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Executar testes Web
+        run: |
+          cd RepositorioWeb
+          pytest
+
+      - name: Publicar relatório HTML
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: web-test-report
+          path: RepositorioWeb/reports/report.html
