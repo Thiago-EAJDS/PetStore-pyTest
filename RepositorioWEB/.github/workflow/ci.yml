@@ -2,25 +2,31 @@ web-tests:
     runs-on: ubuntu-latest
 
     steps:
+      # Faz o checkout do código do repositório
       - name: Checkout código
         uses: actions/checkout@v4
 
+      # Configura o Python na versão 3.11
       - name: Configurar Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
+      # Instala as dependências do projeto web
       - name: Instalar dependências
         run: pip install -r RepositorioWeb/requirements.txt
 
+      # Instala o Chrome necessário para rodar o Selenium no ambiente CI
       - name: Instalar Chrome
         uses: browser-actions/setup-chrome@v1
 
+      # Executa os testes E2E em modo headless (sem interface gráfica)
       - name: Executar testes Web
         run: |
           cd RepositorioWeb
           pytest
 
+      # Salva o relatório HTML como artefato acessível na aba Actions do GitHub
       - name: Publicar relatório HTML
         uses: actions/upload-artifact@v4
         if: always()
